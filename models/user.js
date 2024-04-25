@@ -7,11 +7,11 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    username: String
 });
 
 UserSchema.plugin(passportLocalMongoose);
-
 
 
 module.exports = mongoose.model('User', UserSchema);

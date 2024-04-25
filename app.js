@@ -48,18 +48,19 @@ app.use((req, res, next) =>{
     next();
 })
 
+app.use(passport.initialize());
+app.use(passport.session);
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.get('/fakeUser', async (req, res) =>{
         const user = new User({email:'Kutty@gmail.com', username: 'Kutty'});
         const newUser = await User.register(user, 'chicken');
         res.send(newUser);
     });
-
-// app.use(passport.initialize());
-// app.use(passport.session);
-// passport.use(new localStrategy(User.authenticate()));
-
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
 
 app.use('/', userRoutes)
