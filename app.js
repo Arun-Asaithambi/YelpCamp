@@ -48,19 +48,24 @@ app.use((req, res, next) =>{
     next();
 })
 
-app.use(passport.initialize());
-app.use(passport.session);
-passport.use(new localStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.post('/login/password', passport.authenticate('local', {
+    successRedirect: '/campgrounds',
+    failureRedirect: '/login'
+  }));
+// app.use(passport.initialize());
+// app.use(passport.session);
+// passport.use(new localStrategy(User.authenticate()));
+
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 
-app.get('/fakeUser', async (req, res) =>{
-        const user = new User({email:'Kutty@gmail.com', username: 'Kutty'});
-        const newUser = await User.register(user, 'chicken');
-        res.send(newUser);
-    });
+// app.get('/fakeUser', async (req, res) =>{
+//         const user = new User({email:'Kutty@gmail.com', username: 'Kutty'});
+//         const newUser = await User.register(user, 'chicken');
+//         res.send(newUser);
+//     });
 
 
 app.use('/', userRoutes)
@@ -70,6 +75,7 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.get('/', (req, res)=>{
     res.render('home')
 });
+
 
 app.all('*', (req, res, next) =>{
      // res.send('404!!!')
