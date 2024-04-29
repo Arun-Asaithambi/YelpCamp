@@ -53,19 +53,21 @@ app.post('/login/password', passport.authenticate('local', {
     successRedirect: '/campgrounds',
     failureRedirect: '/login'
   }));
+
+// these are already in passport js defautely so we don't have to wrote in our code
 // app.use(passport.initialize());
 // app.use(passport.session);
 // passport.use(new localStrategy(User.authenticate()));
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
-// app.get('/fakeUser', async (req, res) =>{
-//         const user = new User({email:'Kutty@gmail.com', username: 'Kutty'});
-//         const newUser = await User.register(user, 'chicken');
-//         res.send(newUser);
-//     });
+app.get('/fakeUser', async (req, res) =>{
+        const user = new User({email:'Kutty@gmail.com', username: 'Kutty'});
+        const newUser = await User.register(user, 'chicken');
+        res.send(newUser);
+    });
 
 
 app.use('/', userRoutes)
