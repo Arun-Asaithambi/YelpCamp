@@ -36,13 +36,13 @@ router.get('/login', (req, res)=>{
 //   res.redirect('/campgrounds');
 // })
 
-router.post('/login',async(req, res) =>{
+router.post('/login',async(req , res) =>{
   const { username, password } = req.body;
-  const finduser = await User.findOne({ username });
+  const finduser = await User.findOne({ username});
   if(finduser){
   req.flash('success', 'Welcome back!!') 
-  res.redirect('/campgrounds')
-  } else{
+  res.redirect('campgrounds')
+  } else {
     req.flash('error', 'somthing wrong in username or password');
     res.redirect('login');
   }
